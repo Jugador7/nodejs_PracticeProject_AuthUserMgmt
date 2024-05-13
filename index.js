@@ -50,6 +50,13 @@ app.use("/friends", function auth(req,res,next){
     }
 });
 
+// You will provide an endpoint for the registered users to login. This endpoint will do the following:
+// Return an error if the username or password is not provided.
+
+// Creates an access token that is valid for 1 hour (60 X 60 seconds) and logs the user in, if the credentials are correct.
+
+// Throws an error, if the credentials are incorrect.
+
 app.post("/login", (req,res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -61,7 +68,7 @@ app.post("/login", (req,res) => {
   if (authenticatedUser(username,password)) {
     let accessToken = jwt.sign({
       data: password
-    }, 'access', { expiresIn: 60 * 60 });
+    }, 'access', { expiresIn: 60});
 
     req.session.authorization = {
       accessToken,username
